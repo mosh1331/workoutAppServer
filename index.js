@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const cors = require('cors');
 // Connect to MongoDB
 const MONGO_URL = "mongodb+srv://mosh13:mohammed13@cluster0.tyvoi1o.mongodb.net/?retryWrites=true&w=majority"
 mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -35,11 +35,14 @@ const exerciseSchema = new mongoose.Schema({
 
 const Exercise = mongoose.model('Exercise', exerciseSchema);
 
+
 // Create Express app
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
+
 
 // REST APIs
 
