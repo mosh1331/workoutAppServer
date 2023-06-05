@@ -25,6 +25,16 @@ const workoutSchema = new mongoose.Schema({
 // Define Workout model
 const Workout = mongoose.model('Workout', workoutSchema);
 
+// Define exercise schema
+const exerciseSchema = new mongoose.Schema({
+  id: String,
+  name: String,
+  type: String,
+  muscle: String,
+});
+
+const Exercise = mongoose.model('Exercise', exerciseSchema);
+
 // Create Express app
 const app = express();
 
@@ -32,6 +42,29 @@ const app = express();
 app.use(bodyParser.json());
 
 // REST APIs
+
+// Endpoint to add exercises to the collection
+app.post('/exercises', async (req, res) => {
+  try {
+    const exercises = req.body;
+    await Exercise.insertMany(exercises);
+    res.status(201).json({ message: 'Exercises added successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred' });
+  }
+});
+
+// Endpoint to get the list of exercises
+app.get('/exercises', async (req, res) => {
+  try {
+    const exercises = await Exercise.find();
+    res.json(exercises);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred' });
+  }
+});
 
 // Create a new workout
 app.post('/workouts', async (req, res) => {
