@@ -125,7 +125,7 @@ app.delete('/workouts/:id', async (req, res) => {
     }
     res.json({ message: 'Workout deleted' });
   } catch (err) {
-    res.status(500).json({ message: err.message + req.params.id });
+    res.status(500).json({ message: err.message });
   }
 });
 
