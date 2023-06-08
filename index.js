@@ -129,6 +129,16 @@ app.delete('/workouts/:id', async (req, res) => {
   }
 });
 
+//Delete All
+app.delete('/workouts/all', async (req, res) => {
+  try {
+    await Workout.deleteMany({});
+    res.json({ message: 'All workouts deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Start the server
 const port = 3000;
 app.listen(port, () => {
