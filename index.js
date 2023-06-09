@@ -130,7 +130,7 @@ app.delete('/workouts/:id', async (req, res) => {
 });
 
 //Delete All
-app.delete('/workouts/all', async (req, res) => {
+app.delete('/clearAll', async (req, res) => {
   try {
     await Workout.deleteMany({});
     res.json({ message: 'All workouts deleted' });
