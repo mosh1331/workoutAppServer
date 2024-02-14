@@ -1,12 +1,22 @@
 // routes/workouts.js
 const express = require('express');
 const Workout = require('../models/workout');
+const WorkoutDay = require('../models/workoutDay');
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
+    const {date} = req.body
   try {
+    let workoutDay = await WorkoutDay.findOne({ date });
+
+    if (!workoutDay) {
+      // If no WorkoutDay exists, create a new one
+      workoutDay = new WorkoutDay({ date });
+      await workoutDay.save();
+    }
     const workout = new Workout(req.body);
+
     const savedWorkout = await workout.save();
     res.json(savedWorkout);
   } catch (err) {
