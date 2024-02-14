@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const exerciseRoutes = require('./routes/exercises');
 const workoutRoutes = require('./routes/workouts');
+const workoutDayRoutes = require('./routes/workoutDay');
 
 const MONGO_URL = "mongodb+srv://mosh13:mohammed13@cluster0.tyvoi1o.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 
 app.use('/exercises', exerciseRoutes);
 app.use('/workouts', workoutRoutes);
+app.use('/workoutDays', workoutDayRoutes);
 
 const port = 3000;
 app.listen(port, () => {

@@ -7,7 +7,7 @@ const router = express.Router();
 // ... (existing code)
 
 // Get all workout days
-router.get('/workout-days', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const workoutDays = await WorkoutDay.find();
     res.json(workoutDays);
