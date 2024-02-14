@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 
 // Add other workout routes (get all, get by id, update, delete) here
 // Read all workouts
-router.get('/workouts', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const workouts = await Workout.find();
       res.json(workouts);
@@ -26,7 +26,7 @@ router.get('/workouts', async (req, res) => {
   });
   
   // Read a specific workout
-  router.get('/workouts/:id', async (req, res) => {
+  router.get('/:id', async (req, res) => {
     try {
       const workout = await Workout.findById(req.params.id);
       if (!workout) {
@@ -39,7 +39,7 @@ router.get('/workouts', async (req, res) => {
   });
   
   // Update a workout
-  router.put('/workouts/:id', async (req, res) => {
+  router.put('/:id', async (req, res) => {
     try {
       const workout = await Workout.findByIdAndUpdate(req.params.id, req.body, { new: true });
       if (!workout) {
@@ -52,7 +52,7 @@ router.get('/workouts', async (req, res) => {
   });
   
   // Delete a workout
-  router.delete('/workouts/:id', async (req, res) => {
+  router.delete('/:id', async (req, res) => {
     try {
       const workout = await Workout.findByIdAndDelete(req.params.id);
       if (!workout) {
