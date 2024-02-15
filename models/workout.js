@@ -2,7 +2,11 @@
 const mongoose = require('mongoose');
 
 const workoutSchema = new mongoose.Schema({
-  date: { type: Date, required: true },
+    date: {
+        type: Date,
+        required: true,
+        default: () => new Date().setUTCHours(0, 0, 0, 0) // Set time to midnight by default
+      },
   exercises: [{
     name: { type: String, required: true },
     sets: [{
