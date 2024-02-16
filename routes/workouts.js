@@ -29,7 +29,6 @@ router.post('/', async (req, res) => {
   }
 })
 
-
 // Read all workouts
 router.get('/', async (req, res) => {
   try {
@@ -81,6 +80,14 @@ router.put('/:id', async (req, res) => {
     if (!workout) {
       return res.status(404).json({ message: 'Workout not found' })
     }
+    console.log(workout, 'workout')
+    // Check if the exercises array is empty
+    if (workout.exercises && workout.exercises.length === 0) {
+      // If empty, remove the date from WorkoutDay
+      await Workout.findByIdAndDelete(req.params.id)
+      await WorkoutDay.deleteOne({ date: workout.date });
+    }
+
     res.json(workout)
   } catch (err) {
     res.status(400).json({ message: err.message })
@@ -92,6 +99,8 @@ router.delete('/:id', async (req, res) => {
   try {
     if (req.params.id === 'all') {
       await Workout.deleteMany({})
+      await WorkoutDay.deleteMany({})
+
       res.json({ message: 'All workouts deleted' })
     }
     const workout = await Workout.findByIdAndDelete(req.params.id)
@@ -99,16 +108,6 @@ router.delete('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Workout not found' })
     }
     res.json({ message: 'Workout deleted' })
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
-
-//Delete All
-router.delete('/clearAll/', async (req, res) => {
-  try {
-    await Workout.deleteMany({})
-    res.json({ message: 'All workouts deleted' })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
